@@ -223,13 +223,14 @@ else
     echo_warn "powerlevel10k already installed"
 fi
 
-# Apply p10k config
-echo_info "Applying p10k config..."
-curl -fsSL https://raw.githubusercontent.com/go-johnnyhe/dotfiles/main/.p10k.zsh -o ~/.p10k.zsh
-
 # Setup .zshrc
 echo_info "Configuring .zshrc..."
 cat > ~/.zshrc << 'EOF'
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Add local bin to PATH (must be before oh-my-zsh loads)
 export PATH="$HOME/.local/bin:$PATH"
 
@@ -264,6 +265,9 @@ export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 
 # zoxide
 eval "$(zoxide init zsh)"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 EOF
 
 # Change default shell to zsh
@@ -278,8 +282,9 @@ echo_info "Installation complete!"
 echo_info "============================================"
 echo_info "Next steps:"
 echo_info "1. Log out and log back in (or run 'exec zsh')"
-echo_info "2. Open nvim and let NvChad finish installing"
-echo_info "3. Tmux prefix is now Ctrl+A"
+echo_info "2. Run 'p10k configure' to set up powerlevel10k"
+echo_info "3. Open nvim and let NvChad finish installing"
+echo_info "4. Tmux prefix is now Ctrl+A"
 echo_info ""
 echo_info "Quick reference:"
 echo_info "- Tmux: prefix | (vertical split), prefix - (horizontal split)"
