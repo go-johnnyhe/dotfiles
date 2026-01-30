@@ -270,6 +270,10 @@ eval "$(zoxide init zsh)"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 EOF
 
+# Download p10k configuration
+echo_info "Downloading p10k configuration..."
+wget -q https://raw.githubusercontent.com/go-johnnyhe/dotfiles/main/.p10k.zsh -O ~/.p10k.zsh
+
 # Change default shell to zsh
 echo_info "Changing default shell to zsh..."
 if [ "$SHELL" != "$(which zsh)" ]; then
