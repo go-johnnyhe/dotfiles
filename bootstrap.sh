@@ -275,4 +275,3 @@ echo_info "- Tmux: prefix | (vertical split), prefix - (horizontal split)"
 echo_info "- Tmux: prefix h/j/k/l (navigate panes)"
 echo_info "- zoxide: z <dir> (jump to directory)"
 echo_info "- fzf: Ctrl+R (history search), Ctrl+T (file search)"
-EOF
