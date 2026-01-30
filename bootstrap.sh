@@ -219,6 +219,9 @@ fi
 # Setup .zshrc
 echo_info "Configuring .zshrc..."
 cat > ~/.zshrc << 'EOF'
+# Add local bin to PATH (must be before oh-my-zsh loads)
+export PATH="$HOME/.local/bin:$PATH"
+
 # Path to oh-my-zsh installation
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -249,9 +252,6 @@ export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 
 # zoxide
 eval "$(zoxide init zsh)"
-
-# Add local bin to PATH
-export PATH="$HOME/.local/bin:$PATH"
 EOF
 
 # Change default shell to zsh
