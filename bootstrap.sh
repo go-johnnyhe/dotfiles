@@ -223,6 +223,10 @@ else
     echo_warn "powerlevel10k already installed"
 fi
 
+# Apply p10k config
+echo_info "Applying p10k config..."
+curl -fsSL https://raw.githubusercontent.com/go-johnnyhe/dotfiles/main/.p10k.zsh -o ~/.p10k.zsh
+
 # Setup .zshrc
 echo_info "Configuring .zshrc..."
 cat > ~/.zshrc << 'EOF'
