@@ -61,9 +61,9 @@ else
         sudo pacman -S --noconfirm neovim
     else
         # Use AppImage for Ubuntu/Debian and other distros
-        curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
-        chmod u+x nvim.appimage
-        sudo mv nvim.appimage /usr/local/bin/nvim
+        curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
+        chmod u+x nvim-linux-x86_64.appimage
+        sudo mv nvim-linux-x86_64.appimage /usr/local/bin/nvim
     fi
     echo_info "Neovim installed"
 fi
