@@ -57,13 +57,10 @@ echo_info "Installing neovim..."
 if command -v nvim &> /dev/null; then
     echo_warn "Neovim already installed"
 else
-    if [[ "$OS" == "ubuntu" ]] || [[ "$OS" == "debian" ]]; then
-        # Use snap for Ubuntu/Debian (most reliable)
-        sudo snap install nvim --classic
-    elif [[ "$OS" == "arch" ]]; then
+    if [[ "$OS" == "arch" ]]; then
         sudo pacman -S --noconfirm neovim
     else
-        # Fallback to AppImage for other distros
+        # Use AppImage for Ubuntu/Debian and other distros
         curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
         chmod u+x nvim.appimage
         sudo mv nvim.appimage /usr/local/bin/nvim
