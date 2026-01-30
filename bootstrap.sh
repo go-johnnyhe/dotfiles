@@ -57,7 +57,10 @@ echo_info "Installing neovim..."
 if command -v nvim &> /dev/null; then
     echo_warn "Neovim already installed"
 else
-    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+    # Get latest version number
+    NVIM_VERSION=$(curl -s https://api.github.com/repos/neovim/neovim/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
+    echo_info "Installing neovim $NVIM_VERSION"
+    curl -Lo nvim-linux64.tar.gz "https://github.com/neovim/neovim/releases/download/${NVIM_VERSION}/nvim-linux64.tar.gz"
     sudo tar -C /opt -xzf nvim-linux64.tar.gz
     sudo ln -sf /opt/nvim-linux64/bin/nvim /usr/local/bin/nvim
     rm nvim-linux64.tar.gz
