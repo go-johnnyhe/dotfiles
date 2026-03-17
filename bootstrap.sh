@@ -52,6 +52,14 @@ elif [[ "$OS" == "arch" ]]; then
     sudo pacman -S --noconfirm tmux
 fi
 
+# Install TPM (tmux plugin manager)
+echo_info "Installing TPM..."
+if [ ! -d ~/.tmux/plugins/tpm ]; then
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+else
+    echo_warn "TPM already installed"
+fi
+
 # Install neovim (latest stable)
 echo_info "Installing neovim..."
 if command -v nvim &> /dev/null; then
@@ -202,6 +210,21 @@ set -g status-justify centre
 # Pane border colors
 set -g pane-border-style fg=colour240
 set -g pane-active-border-style fg=colour33
+
+# Plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-continuum'
+
+# Resurrect settings
+set -g @resurrect-capture-pane-contents 'on'
+
+# Continuum settings - auto-save every 15 min, auto-restore on start
+set -g @continuum-restore 'on'
+set -g @continuum-save-interval '15'
+
+# Initialize TPM (must be last line)
+run '~/.tmux/plugins/tpm/tpm'
 EOF
 
 # Install oh-my-zsh
@@ -271,6 +294,13 @@ EOF
 echo_info "Downloading p10k configuration..."
 wget -q https://raw.githubusercontent.com/go-johnnyhe/dotfiles/main/.p10k.zsh -O ~/.p10k.zsh
 
+# Install tmux plugins headlessly
+echo_info "Installing tmux plugins..."
+tmux new-session -d -s temp 2>/dev/null || true
+sleep 1
+~/.tmux/plugins/tpm/bin/install_plugins
+tmux kill-session -t temp 2>/dev/null || true
+
 # Change default shell to zsh
 echo_info "Changing default shell to zsh..."
 if [ "$SHELL" != "$(which zsh)" ]; then
@@ -290,5 +320,6 @@ echo_info ""
 echo_info "Quick reference:"
 echo_info "- Tmux: prefix | (vertical split), prefix - (horizontal split)"
 echo_info "- Tmux: prefix h/j/k/l (navigate panes)"
+echo_info "- Tmux: prefix Ctrl+S (save session), prefix Ctrl+R (restore session)"
 echo_info "- zoxide: z <dir> (jump to directory)"
 echo_info "- fzf: Ctrl+R (history search), Ctrl+T (file search)"
